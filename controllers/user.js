@@ -32,7 +32,7 @@ module.exports.login = (req, res) => {
   const { email, password } = req.body;
   return user.findUserByCredentials(email, password)
     .then((usr) => {
-      const token = jwt.sign({ _id: usr._id }, { expiresIn: '7d' });
+      const token = jwt.sign({ _id: usr._id }, 'secret-key', { expiresIn: '7d' });
       res.send({ token });
     })
     .catch((err) => {
