@@ -15,7 +15,13 @@ module.exports.createCard = (req, res) => {
 };
 module.exports.deleteCard = (req, res) => {
   сard
-    .findOneAndDelete({ _id: req.params.cardId }).orFail()
-    .then(() => res.status(200).send({ message: 'Карточка удалена' }))
-    .catch((err) => res.status(404).send({ err, message: 'нет такой карточки' }));
+    .findOne({ _id: req.params.cardId }).orFail(() => new Error('Нет такой карточки'))
+    .then((cardobj) => {
+      if (cardobj.owner.toString() !== req.user._id) {
+        return res.status(403).send({ message: 'Удалять не свои карточки нельзя' });
+      }
+      cardobj.remove();
+      return res.status(200).send({ message: 'Карточка удалена' });
+    })
+    .catch((err) => res.status(404).send({ err, message: err.message }));
 };

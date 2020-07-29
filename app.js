@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const userRout = require('./routes/users');
 const cardRout = require('./routes/cards');
 const { login, createUser } = require('./controllers/user');
-const auth = require('./middlewares/auth');
+// const auth = require('./middlewares/auth');
 
 const { PORT = 3000 } = process.env;
 mongoose.connect('mongodb://localhost:27017/mestodb', {
@@ -19,7 +19,7 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 
 app.post('/signin', login);
 app.post('/signup', createUser);
-app.use(auth);
+// app.use(auth);
 app.use('/users', userRout);
 app.use('/cards', cardRout);
 
