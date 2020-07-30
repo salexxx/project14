@@ -16,11 +16,11 @@ module.exports.createCard = (req, res) => {
 module.exports.deleteCard = (req, res) => {
   сard
     .findOne({ _id: req.params.cardId }).orFail(() => new Error('Нет такой карточки'))
-    .then((cardobj) => {
+    .then(async (cardobj) => {
       if (cardobj.owner.toString() !== req.user._id) {
         return res.status(403).send({ message: 'Удалять не свои карточки нельзя' });
       }
-      cardobj.remove();
+      await cardobj.remove();
       return res.status(200).send({ message: 'Карточка удалена' });
     })
     .catch((err) => res.status(404).send({ err, message: err.message }));
