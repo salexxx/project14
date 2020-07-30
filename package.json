@@ -1,7 +1,7 @@
 {
-  "name": "project13",
+  "name": "project14",
   "version": "0.0.1",
-  "description": "project13 yandex-praktikum",
+  "description": "project14 yandex-praktikum",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
